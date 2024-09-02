@@ -1,6 +1,6 @@
 ## ⚠️ Warning
 
-$${\color{red} ***This app is under development and will work only for doctype called "Quiz".***}$$
+$${\color{red}This \space app \space is \space under \space development \space and \space will \space work \space only \space for \space doctype \space called \space Quiz}$$
 
 ## Frappe Mathlive
 
