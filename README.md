@@ -1,7 +1,7 @@
 ## ⚠️ Warning
-```diff
-- ***This app is under development and will work only for doctype called "Quiz".***
-```
+
+$${\color{red} ***This app is under development and will work only for doctype called "Quiz".***}$$
+
 ## Frappe Mathlive
 
 Long Text field replaced with Mathlive field to give you flexibility to enter equations
@@ -17,6 +17,9 @@ bench get-app https://github.com/umar834/frappe_mathlive
 ```diff
 bench --site [sitename] install-app frappe_mathlive
 ```
+
+## Screenshots
+
 ![screenshot](frappe_mathlive_1.png)
 ![screenshot](frappe_mathlive_2.png)
 
