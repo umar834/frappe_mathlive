@@ -1,6 +1,6 @@
 ## ⚠️ - Warning
 ```diff
-- **This is under development and will work only for Quiz doctype.**
+- **This app is under development and will work only for doctype called "Quiz".**
 ```
 ## Frappe Mathlive
 
