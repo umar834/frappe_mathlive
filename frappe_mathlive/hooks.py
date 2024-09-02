@@ -12,19 +12,13 @@ app_license = "mit"
 # include js, css files in header of desk.html
 app_include_css = [
     "https://unpkg.com/mathlive/dist/mathlive.css",
-    "/assets/frappe_tinymce/css/frappe_tinymce.css"
+    "/assets/frappe_mathlive/css/frappe_mathlive.css"
 ]
-# app_include_js = "/assets/frappe_tinymce/js/frappe_tinymce.js"
 
 app_include_js = [
-    "https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.2.0/tinymce.min.js",
-    "/assets/frappe_tinymce/js/frappe_tinymce.js",
     "https://unpkg.com/mathlive@latest/dist/mathlive.min.js",
+    "/assets/frappe_mathlive/js/frappe_mathlive.js",
 ]
-
-form_custom_js = {
-    "Quiz": "public/js/frappe_tinymce.js",
-}
 
 # include js, css files in header of web template
 # web_include_css = "/assets/frappe_mathlive/css/frappe_mathlive.css"
