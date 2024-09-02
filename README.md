@@ -1,7 +1,7 @@
-## ⚠️ Warning
-
-<span style="color: red;">**This is under development and will work only for Quiz doctype.**</span>
-
+## ⚠️ - Warning
+```diff
+- **This is under development and will work only for Quiz doctype.**
+```
 ## Frappe Mathlive
 
 Long Text field replaced with Mathlive field to give you flexibility to enter equations
