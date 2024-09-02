@@ -12,7 +12,8 @@ Long Text field replaced with Mathlive field to give you flexibility to enter eq
 
 ```bench --site [sitename] install-app frappe_mathlive```
 
-![image](https://user-images.githubusercontent.com/11792643/200249709-9edff738-0625-485d-a916-c0e7afbc8579.png)
+![screenshot](frappe_mathlive_1.png)
+![screenshot](frappe_mathlive_2.png)
 
 
 
