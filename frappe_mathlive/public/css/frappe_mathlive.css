@@ -1,0 +1,17 @@
+.tox-tinymce--toolbar-sticky-on .tox-editor-header {
+        top:135px !important;
+}
+
+#freeze.grid-form
+{
+        z-index: 10 !important;
+}
+
+.form-in-grid
+{
+        z-index: 12 !important;
+}
+
+math-field {
+        --text-font-family: 'Inter', sans-serif;
+}
