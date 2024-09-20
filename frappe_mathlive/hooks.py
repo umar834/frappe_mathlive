@@ -18,6 +18,7 @@ app_include_css = [
 app_include_js = [
     "https://unpkg.com/mathlive@latest/dist/mathlive.min.js",
     "/assets/frappe_mathlive/js/frappe_mathlive.js",
+    "/assets/frappe_mathlive/js/custom_drawer.js",
 ]
 
 # include js, css files in header of web template

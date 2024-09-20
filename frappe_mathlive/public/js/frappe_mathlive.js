@@ -51,7 +51,6 @@ frappe.ui.form.on('Quiz', {
                     const rows = field.grid.get_data();
                     rows.forEach(row => {
                         const $row_wrapper = $(field.grid.get_row(row.name).wrapper);
-                        console.log('Processing row:', row.name);
 
                         $row_wrapper.find('textarea').each(function() {
                             const $textarea = $(this);
@@ -74,13 +73,22 @@ frappe.ui.form.on('Quiz', {
 frappe.ui.form.on('Quiz Question', {
     form_render: function (frm, cdt, cdn) {
         const row = locals[cdt][cdn];
-        console.log('Rendering form for row:', row.name);
 
         // Access the row wrapper
-        const row_wrapper = frm.fields_dict.set_1.grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
+        let row_wrapper = null;
+        if(row.parentfield == "set_1") {
+            row_wrapper = frm.fields_dict.set_1.grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
+        } else if(row.parentfield == "set_2") {
+            row_wrapper = frm.fields_dict.set_2.grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
+        } else if(row.parentfield == "set_3") {
+            row_wrapper = frm.fields_dict.set_3.grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
+        }
+        else {
+            console.error('Could not find row wrapper for row:', row.name);
+            return;
+        }
         $(row_wrapper).find('textarea').each(function() {
             const $textarea = $(this);
-            console.log('Found textarea:', $textarea);
             const fieldname = $textarea.attr('data-fieldname');
             replaceWithMathFieldForTextarea($textarea, fieldname, frm, true);
         });
