@@ -25,72 +25,84 @@ function replaceWithMathFieldForTextarea($textarea, fieldname, frm, is_child_tab
     }
 }
 
-frappe.ui.form.on('Quiz', {
-    onload: function (frm) {
-        if (typeof MathLive === 'undefined') {
-            console.error('MathLive is not loaded.');
-            return;
-        } else {
-            console.log('MathLive is loaded.');
-        }
+// the following two handles will watch the page changes everywhere
+$(window).on('hashchange', page_changed);
+$(window).on('load', page_changed);
 
-        function applyMathLiveToAllTextareas() {
-            // Apply MathLive to top-level text areas
-            $.each(frm.fields_dict, function(fieldname, field) {
-                if (field.df.fieldtype === 'Long Text') {
-                    const $textarea = field.$wrapper.find('textarea');
-                    if ($textarea.length) {
-                        replaceWithMathFieldForTextarea($textarea, fieldname, frm);
+function page_changed(event) {
+    // waiting for page to load completely
+    frappe.after_ajax(function () {
+        var route = frappe.get_route();
+        if (route[0] == "Form") {
+            // Add a flag to track if child handlers are already set
+            let childHandlersSet = false;
+
+            frappe.ui.form.on(route[1], {
+                onload: function (frm) {
+                    if (typeof MathLive === 'undefined') {
+                        console.error('MathLive is not loaded.');
+                        return;
+                    } else {
+                        console.log('MathLive is loaded.');
                     }
-                }
-            });
-
-            // Apply MathLive to textareas in child tables
-            $.each(frm.fields_dict, function(fieldname, field) {
-                if (field.df.fieldtype === 'Table' && field.grid) {
-                    const rows = field.grid.get_data();
-                    rows.forEach(row => {
-                        const $row_wrapper = $(field.grid.get_row(row.name).wrapper);
-
-                        $row_wrapper.find('textarea').each(function() {
-                            const $textarea = $(this);
-                            const child_fieldname = $textarea.attr('data-fieldname');
-                            const fieldnameParts = [field.df.fieldname, child_fieldname, row.name].join('.'); // Construct the full fieldname
-                            replaceWithMathFieldForTextarea($textarea, fieldnameParts, frm, true);
+            
+                    function applyMathLiveToAllTextareas() {
+                        // Apply MathLive to top-level text areas
+                        $.each(frm.fields_dict, function(fieldname, field) {
+                            if (field.df.fieldtype === 'Long Text') {
+                                const $textarea = field.$wrapper.find('textarea');
+                                if ($textarea.length) {
+                                    replaceWithMathFieldForTextarea($textarea, fieldname, frm);
+                                }
+                            }
                         });
-                    });
+                    }
+                    applyMathLiveToAllTextareas();
+
+                    // Childtable code
+                    if (!childHandlersSet) {
+                        childHandlersSet = true; // Mark handlers as set
+                        frm.meta.fields.forEach(field => {
+                            if (field.fieldtype === 'Table') {
+                                // Bind events dynamically to each child doctype
+                                frappe.ui.form.on(field.options, {
+                                    form_render: function (frm, cdt, cdn) {
+                                        console.log('form_render called');
+                                        const row = locals[cdt][cdn];
+                                    
+                                        // Find the parentfield dynamically
+                                        const child_table_field = frm.meta.fields.find(field => field.fieldtype === 'Table' && field.fieldname === row.parentfield);
+                                    
+                                        if (!child_table_field) {
+                                            console.error(`Child table for parentfield "${row.parentfield}" not found.`);
+                                            return;
+                                        }
+                                    
+                                        // Access the row wrapper dynamically
+                                        let row_wrapper = null;
+                                        try {
+                                            row_wrapper = frm.fields_dict[row.parentfield].grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
+                                        } catch (e) {
+                                            console.error('Could not find row wrapper for row:', row.name, e);
+                                            return;
+                                        }
+                                    
+                                        // Process the row wrapper to replace textareas with MathField
+                                        $(row_wrapper).find('textarea').each(function () {
+                                            const $textarea = $(this);
+                                            const fieldname = $textarea.attr('data-fieldname');
+                                            replaceWithMathFieldForTextarea($textarea, fieldname, frm, true);
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                },
+                refresh: function (frm) {
+                    frm.trigger('onload');
                 }
             });
         }
-
-        applyMathLiveToAllTextareas();
-    },
-    refresh: function (frm) {
-        frm.trigger('onload');
-    }
-});
-
-frappe.ui.form.on('Quiz Question', {
-    form_render: function (frm, cdt, cdn) {
-        const row = locals[cdt][cdn];
-
-        // Access the row wrapper
-        let row_wrapper = null;
-        if(row.parentfield == "set_1") {
-            row_wrapper = frm.fields_dict.set_1.grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
-        } else if(row.parentfield == "set_2") {
-            row_wrapper = frm.fields_dict.set_2.grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
-        } else if(row.parentfield == "set_3") {
-            row_wrapper = frm.fields_dict.set_3.grid.grid_rows.find(r => r.doc.name === row.name).wrapper;
-        }
-        else {
-            console.error('Could not find row wrapper for row:', row.name);
-            return;
-        }
-        $(row_wrapper).find('textarea').each(function() {
-            const $textarea = $(this);
-            const fieldname = $textarea.attr('data-fieldname');
-            replaceWithMathFieldForTextarea($textarea, fieldname, frm, true);
-        });
-    }
-});
+    });
+}
