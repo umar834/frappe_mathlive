@@ -1,7 +1,3 @@
-## ⚠️ Warning
-
-$${\color{red}This \space app \space is \space under \space development \space and \space will \space work \space only \space for \space doctype \space called \space Quiz}$$
-
 ## Frappe Mathlive
 
 Long Text field replaced with Mathlive field to give you flexibility to enter equations
