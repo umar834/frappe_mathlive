@@ -4,7 +4,7 @@ This Frappe app integrates MathLive, a powerful math input library, to provide a
 
 ### Key Features
 <ul>
-  <li>Dynamic Math Input: Automatically converts Long Text fields and child table textareas into MathLive input fields, enabling users to enter math expressions intuitively.</li>
+  <li><b>Dynamic Math Input:</b> Automatically converts Long Text fields and child table textareas into MathLive input fields, enabling users to enter math expressions intuitively.</li>
   <li>Child Table Support: Dynamically detects and integrates with all child tables in the parent form, without requiring hardcoded configurations for specific child table names.</li>
   <li>Real-Time Synchronization: Ensures that data entered via MathLive fields is saved correctly by synchronizing changes with the underlying textarea fields.</li>
   <li>Flexible Configuration: Supports any Frappe doctype setup, including user-defined child table configurations and custom fieldnames.</li>
