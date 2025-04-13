@@ -11,14 +11,13 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 app_include_css = [
-    "https://unpkg.com/mathlive/dist/mathlive.css",
+    "https://cdn.jsdelivr.net/npm/mathlive@0.105.0/mathlive-static.min.css",
     "/assets/frappe_mathlive/css/frappe_mathlive.css"
 ]
 
 app_include_js = [
-    "https://unpkg.com/mathlive@latest/dist/mathlive.min.js",
-    "/assets/frappe_mathlive/js/frappe_mathlive.js",
-    "/assets/frappe_mathlive/js/custom_drawer.js",
+    "https://cdn.jsdelivr.net/npm/mathlive@0.105.0/mathlive.min.js",
+    "/assets/frappe_mathlive/js/frappe_mathlive.js"
 ]
 
 # include js, css files in header of web template
